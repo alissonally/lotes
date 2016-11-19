@@ -1,0 +1,28 @@
+{block name="conteudo"}
+<div class="loginmodal-container">
+	{if $erro}
+	<div class="row">
+		<div class="col-md-12 col-xs-12">
+			<div class="alert alert-danger">
+				{$erro}
+			</div>
+		</div>
+	</div>
+	{/if}
+	<h1>Faça login</h1><br>
+	<form action="{$aplication.app}login/exec" method="POST">
+		<label for="email">Email</label>
+		<input type="text" name="email" placeholder="Email" required>
+		<label for="senha">Senha</label>
+		<input type="password" name="senha" placeholder="Senha" required>
+		<!-- <div class="form-group">
+			<select name="acesso" id="" class="form-control">
+				<option value="">Selecione o acesso</option>
+				<option value="1">Gerencia</option>
+				<option value="2">Secretaria</option>
+			</select>
+		</div> -->
+		<input type="submit" class="login loginmodal-submit" value="Logar">
+	</form>
+</div>
+{/block}

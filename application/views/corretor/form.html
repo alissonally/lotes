@@ -1,0 +1,58 @@
+{block name="conteudo"}
+    <div class="col-md-12">
+        {if $erros}
+        <div class="alert alert-danger">
+            {foreach $erros as $erro}
+                {$erro}
+            {/foreach}
+        </div>
+        {/if}
+
+        {if isset($success)}
+        <div class="alert alert-success">
+            {$success}
+        </div>
+        {/if}
+        {if Estatico::CORRETOR != $usuario->nivel}
+        <p>
+            <a href="{$aplication.app}corretor/lista" class="btn btn-primary">Todos os corretores</a>
+        </p>
+        {/if}
+    </div>
+    <form action="{$aplication.app}corretor/create" method="POST">
+        <input type="hidden" id="id" name="id" value="{$corretor->id|default:''}">
+        <div class="form-group ">
+            <label for="nome" class="control-label">Nome<sup>*</sup>:</label>
+            <input type="text" id="nome" name="nome" value="{$corretor->nome|default:''}" placeholder="Nome" class="required form-control" required="required">
+        </div>
+        <div class="form-group">
+            <label for="fone" class="control-label">Fone:</label>
+            <input type="text" id="fone" name="fone" value="{$corretor->fone|default:''}" placeholder="Fone" class="required form-control">
+        </div>
+        <div class="form-group">
+            <label for="email" class="control-label">Email:</label>
+            <input type="email" id="email" name="email" value="{$corretor->email|default:''}" placeholder="Email" class="required form-control">
+        </div>
+        <div class="form-group">
+            <label for="cidade" class="control-label">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" value="{$corretor->cidade|default:''}" placeholder="Cidade" class="required form-control">
+        </div>
+        <div class="form-group">
+            <label for="imobiliaria" class="control-label">Imobiliária:</label>
+            <input type="text" id="imobiliaria" name="imobiliaria" value="{$corretor->imobiliaria|default:''}" placeholder="Imobiliária" class="required form-control">
+        </div>
+        <div class="form-group">
+            <label for="creci" class="control-label">Creci:</label>
+            <input type="text" id="creci" name="creci" value="{$corretor->creci|default:''}" placeholder="CRECI" class="required form-control">
+        </div>
+        <div class="form-group">
+            <label for="coordenador" class="control-label">Coordenador:</label>
+            <input type="text" id="coordenador" name="coordenador" value="{$corretor->coordenador|default:''}" placeholder="Coordenador" class="required form-control">
+        </div>
+        <div class="form-group col-md-12">
+            <div class="row">
+                <input type="submit" value="Salvar" id="salvar" class="btn btn-primary">
+            </div>
+        </div>
+    </form>
+{/block}

@@ -1,0 +1,62 @@
+{block name="conteudo"}
+	<div class="col-md-4">
+        <h2>{$user->nome}</h2>
+        <address>
+            {$user->email} <br>
+            Nivel: {Estatico::nivel($user->nivel)}
+        </address>
+
+        {if $user->nivel==Estatico::CORRETOR}
+            <address>
+                CRECI: {$user->corretor->creci} <br>
+                Coordenador: {$user->corretor->coordenador}<br>
+                Imobiliária: {$user->corretor->imobiliaria}<br>
+            </address>
+            <a href="{$aplication.app}corretor/edit/{$user->corretor->id}" class="btn btn-success">Editar Informações do corretor</a>
+        {/if}
+    </div>
+    <div class="col-md-8">
+        <form class="form-horizontal" role="form" action="{$aplication.app}usuario/create_perfil" method="POST">
+	    <h2>{$label|default:'Registro de usuário'}</h2>
+	    <div class="col-md-12">
+	        {if $erros}
+	        <div class="alert alert-danger">
+	            {foreach $erros as $erro}
+	                {$erro} <br>
+	            {/foreach}
+	        </div>
+	        {/if}
+	        {if $update}
+	        <div class="alert alert-success">
+	            {$update}
+	        </div>
+	        {/if}
+	    </div>
+
+	    <div class="form-group">
+	        <label for="nome" class="col-sm-3 control-label">Nome</label>
+	        <div class="col-sm-9">
+	            <input type="text" id="nome" name="nome" value="{$user->nome|default:''}" placeholder="Nome" class="form-control" autofocus>
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label for="email" class="col-sm-3 control-label">Email</label>
+	        <div class="col-sm-9">
+	            <input type="email" id="email" name="email" {if isset($user->id)} disabled {/if} value="{$user->email|default:''}" placeholder="Email" class="form-control">
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <label for="senha" class="col-sm-3 control-label">Senha</label>
+	        <div class="col-sm-9">
+	            <input type="password" id="senha" name="senha" placeholder="Senha" class="form-control">
+	        </div>
+	    </div>
+	    <div class="form-group">
+	        <div class="col-sm-9 col-sm-offset-3">
+	            <button type="submit" class="btn btn-primary ">Salvar</button>
+	        </div>
+	    </div>
+	    <input type="hidden" value="{$user->id|default:''}" name="id" id="id">
+	   </form>
+    </div>
+{/block}

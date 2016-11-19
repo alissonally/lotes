@@ -1,0 +1,35 @@
+{block name="conteudo"}
+    <div class="col-md-12">
+        <p>
+            <a href="{$aplication.app}corretor/novo" class="btn btn-primary">Novo</a>
+        </p>
+        <table class="table">
+            <tread>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Fone</th>
+                    <th>CRECI</th>
+                    <th>Ação</th>
+                </tr>
+            </tread>
+            <tbody>
+                {foreach $corretores as $c}
+                <tr>
+                    <td>{$c->nome}</td>
+                    <td>{$c->email}</td>
+                    <td>{$c->fone}</td>
+                    <td>{$c->creci}</td>
+                    <td>
+                        <a href="{$aplication.app}corretor/edit/{$c->id}" class="btn btn-edit"><span class="glyphicon glyphicon-pencil"></span>Editar </a>
+                    </td>
+                </tr>
+                {/foreach}
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-12 col-xs-12">
+        {$paginacao}
+    </div>
+
+{/block}

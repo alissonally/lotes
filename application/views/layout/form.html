@@ -1,0 +1,241 @@
+{block name="conteudo"}
+
+
+<!-- Row start -->
+<div class="row">
+	<div class="col-md-12 col-sm-12 col-xs-12">
+		
+		{if isset($logou) && $logou}
+          
+            <div class="alert alert-success alert-dismissible" role="alert">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              Você está logado.
+            </div>
+          
+          <div class="clearfix"></div>
+        {/if}
+		<div class="panel panel-default">
+			<div class="panel-heading clearfix">
+				<i class="icon-calendar"></i>
+				<h3 class="panel-title">Passo 1: Selecione a Escola</h3>
+			</div>
+
+			<div class="panel-body">
+
+				<div class="row">
+					<div class="col-sm-8">
+						<div class="form-group">
+							<input class="form-control" id="buscarescola" name="buscarescola" placeholder="Entre com o INEP ou NOME da escola" type="text">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		{if $resposta == 'buscar'} <p>Nenhuma escola escontrada.</p> {/if}
+	</div>
+</div>
+
+{if $resposta && is_array($resposta) }
+<form role="form" action="{$aplication.app}edicao/update" method="POST">
+	<div class="row" ng-show="escola_selecionada != null">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<i class="icon-calendar"></i>
+					<h3 class="panel-title">Escola Selecionada</h3>
+				</div>
+
+				<div class="panel-body">
+
+					<div class="row">
+						<div class="col-xs-12">
+							<p><strong>Nome: </strong>{$resposta.escola.nome} <strong>INEP: </strong>{$resposta.escola.inep}</p>
+							<p><strong>GRE: </strong>{$resposta.escola.gre}ª <strong>Município: </strong>{$resposta.escola.cidade}</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="mostrarUsuario">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<i class="icon-calendar"></i>
+					<h3 class="panel-title">Passo 2: Identifique-se</h3>
+				</div>
+
+				<div class="panel-body">
+
+
+					<div class="row">
+
+						<div class="col-sm-4 col-xs-12">
+							<div class="form-group">
+								<label for="usuario_nome">Seu nome<sup>*</sup></label>
+								<input type="text" class="form-control" id="usuario_nome" value="{$resposta.usuario.nome}" placeholder="Digite seu nome" ng-disabled="!pode_salvar" disabled>
+							</div>
+						</div>
+						<div class="col-sm-4 col-xs-12">
+							<div class="form-group">
+								<label for="usuario_telefone">Telefone da escola<sup>*</sup></label>
+								<input type="text" class="form-control" id="usuario_telefone" value="{$resposta.usuario.fone}" placeholder="(00)0000-0000" ng-disabled="!pode_salvar" disabled>
+							</div>
+						</div>
+						<div class="col-sm-4 col-xs-12">
+							<div class="form-group">
+								<label for="usuario_email">Email da escola<sup>*</sup></label>
+								<input type="email" class="form-control" id="usuario_email" value="{$resposta.usuario.email}" placeholder="Digite o email da escola" ng-disabled="!pode_salvar" disabled>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row" ng-if="mostrarUsuario">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<i class="icon-calendar"></i>
+					<h3 class="panel-title">Passo 3: Vigência do conselho</h3>
+				</div>
+
+				<div class="panel-body">
+
+
+					<div class="row">
+
+						<div class="col-sm-4 col-xs-12">
+							<div class="form-group">
+								<label class="sr-only" for="nome">Início</label>
+								<input class="form-control date" id="data_ini" placeholder="Inicio 00/00/0000" type="text" name="vigencia[data_ini]" value="{$resposta.vigencia.inicio}">
+							</div>
+
+						</div>
+						<div class="col-sm-4 col-xs-12">
+							<div class="form-group">
+								<div class="form-group">
+									<label class="sr-only" for="nome">Fim</label>
+									<input class="form-control date" id="data_ini" placeholder="Fim 00/00/0000" type="text" name="vigencia[data_fim]" value="{$resposta.vigencia.fim}">
+								</div>
+							</div>
+						</div>
+						<input class="form-control" type="hidden" name="vigencia[id]" value="{$resposta.vigencia.id}">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 col-sm-12 col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<i class="icon-calendar"></i>
+					<h3 class="panel-title">Passo 3: Inclua os conselheiros</h3>
+				</div>
+
+				<div class="panel-body">
+					<table class="table table-responsive table-hover" id="table-conselheiros">
+						<thead>
+							<tr>
+								<th>Nome do conselheiro<sup>*</sup></th>
+								<th>Email</th>
+								<th>Fone</th>
+								<th>Função<sup>*</sup></th>
+								<th>Seguimento<sup>*</sup></th>
+								<th>Condição</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tbody id="line_add">
+							<tr class="info">
+								<td>
+									<div class="form-group">
+										<label class="sr-only" for="nome">Nome do Conselheiro Escolares</label>
+										<input ng-model="formItem.nome" class="form-control" id="nome" placeholder="Nome do Conselheiro" type="text">
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label class="sr-only" for="email">Email</label>
+										<input ng-model="formItem.email" class="form-control" id="email" placeholder="Email" type="text">
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label class="sr-only" for="fone">Fone</label>
+										<input ng-model="formItem.fone" class="form-control fone" id="fone" placeholder="Fone" type="text">
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label class="sr-only" for="funcao">Função</label>
+										<select id="funcao" class="form-control">
+											{foreach $dados->funcao as $value}
+												<option value="{$value->nome}">{$value->nome}</option>
+											{/foreach}
+										</select>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label class="sr-only" for="seguimento">Seguimento</label>
+										<select id="seguimento" class="form-control">
+											{foreach $dados->seguimento as $value}
+												<option value="{$value->nome}">{$value->nome}</option>
+											{/foreach}
+										</select>
+									</div>
+								</td>
+								<td>
+									<div class="form-group">
+										<label class="sr-only" for="condicao">Condição</label>
+										<select id="condicao" class="form-control">
+											{foreach $dados->condicao as $value}
+												<option value="{$value->nome}">{$value->nome}</option>
+											{/foreach}
+										</select>
+									</div>
+								</td>
+								<td>
+									<button onclick="addAlunoAprovado()" type="button" class="btn btn-info btn-block" title="Adicionar">Adicionar</button>
+								</td>
+							</tr>
+
+							{foreach $resposta.conselheiros as $conselheiro}
+							<tr id="linha_{$conselheiro@index}" class="linhas" rel="{$conselheiro@index}">
+								<input class="form-control" name="conselheiros[{$conselheiro@index}][cc_id]" type="hidden" value="{$conselheiro.id}">
+								<td>
+									<input class="form-control" id="{$conselheiro@index}_nome" name="conselheiros[{$conselheiro@index}][nome]" type="text" value="{$conselheiro.nome}">
+								</td>
+								<td><input class="form-control" id="{$conselheiro@index}_email" name="conselheiros[{$conselheiro@index}][email]" type="text" value="{$conselheiro.email}"></td>
+								<td><input class="form-control" id="{$conselheiro@index}_fone" name="conselheiros[{$conselheiro@index}][fone]" type="text" value="{$conselheiro.fone}"></td>
+								<td><input class="form-control" id="{$conselheiro@index}_funcao" name="conselheiros[{$conselheiro@index}][funcao]" type="text" value="{$conselheiro.funcao}"></td>
+								<td><input class="form-control" id="{$conselheiro@index}_seguimento" name="conselheiros[{$conselheiro@index}][seguimento]" type="text" value="{$conselheiro.seguimento}"></td>
+								<td><input class="form-control" id="{$conselheiro@index}_condicao" name="conselheiros[{$conselheiro@index}][condicao]" type="text" value="{$conselheiro.condicao}"></td>
+								<td class="form-action" id="col-add">
+									<a title="Excluir" id="{$conselheiro.id}" onclick="excluirConselheiro('linha_{$conselheiro@index}', '{$conselheiro.id}', '{$conselheiro.nome}')"><i class="glyphicon glyphicon-remove"></i></a>
+								</td>
+							</tr>
+							{/foreach}
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<p class="muted pull-right"><small><sup>*</sup>Campos são obrigatórios</small></p>
+	<div class="form-group">
+		<div class="col-sm-12">
+			<button ng-disabled="!pode_salvar" type="submit" id="" class="btn btn-primary btn-lg" title=" Salvar">Salvar Todos os Conselheiros</button>
+			<button type="reset" id="" class="btn btn-default btn-lg" title=" Limpar">Limpar</button>
+		</div>
+	</div>
+	<input type="hidden" value="{$resposta.escola.id}" name="conselho_id">
+	<input type="hidden" value="{$resposta.escola.inep}" name="inep">
+</form>
+{/if}
+{/block}

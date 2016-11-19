@@ -1,0 +1,53 @@
+{block name="conteudo"}
+    <div class="col-md-12 col-xs-12">
+        <h3>Buscar corretor</h3>
+        <div class="row">
+            <div class="col-md-8 col-xs-12">
+                <div class="row">
+                    <form action="{$aplication.app}secretaria/reserva" method="GET">
+                        <div class="form-group col-md-9 col-xs-12">
+                            <select name="corretor" class="form-control" id="sec_filter">
+                                <option value="">Filtrar por corretor</option>
+                                {foreach $corretores as $c}
+                                    <option value="{$c->id}">{$c->nome}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3 col-xs-12">
+                            <input type="submit" class="btn btn-custom" value="Buscar">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-12 col-xs-12 info-corretores">
+
+                <div class="contente">
+                    <header>
+                        10 maiores vendas por corretor
+                    </header>
+                    <main>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Corretor</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach $lotes as $lote}
+                                <tr>
+                                    <td>{$lote->corretor}</td>
+                                    <td>{$lote->total}</td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+
+                        <div class="clearfix"></div>
+                    </main>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}

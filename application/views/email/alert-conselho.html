@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<body>
+   <table class="mainTable" width="100%" cellspacing="0" cellpadding="0" bgcolor="#e1e1e1">
+      <tbody>
+         <tr>
+            <td style="font-size: 0px; height: 20px; line-height: 0;"> </td>
+         </tr>
+         <tr>
+            <td valign="top">
+               <table style="width: 600px; margin: 0px auto;" border="0" width="600" cellspacing="0" cellpadding="0" align="center">
+                  <tbody>
+                     <tr>
+                        <td style="background-color: #feffff; border: #dbdbdb 1px solid; padding: 0px;">
+                           <table style="width: 100%;" cellspacing="0" cellpadding="0" align="left">
+                              <tbody>
+                                 <tr style="height: 20px;">
+                                    <td style="width: 100%; vertical-align: top; text-align: left; background-color: #feffff; padding: 35px 15px 0px 15px;">
+                                       <p style="font-size: 18px; margin-bottom: 1em; font-family: Arial, Helvetica, sans-serif; margin-top: 0px; color: #333333; background-color: transparent; mso-line-height-rule: exactly;" align="left"><strong> {$assunto}</strong> </p>
+                                       <p style="font-size: 12px; margin-bottom: 1em; font-family: Arial, Helvetica, sans-serif; margin-top: 0px; color: #000000; background-color: transparent; mso-line-height-rule: exactly;" align="left"> 
+                                       SEDUC - Cadastro de Conselheiros
+                                       <br>   
+                                        Ola, Informamos que os conselheiros escolares da escola: <b>{$escola}</b> foram incluídos com sucesso. 
+                                       <br>
+                                       <br>
+                                       <br>
+                                       Lista dos conselheiros:
+                                       <table style="width: 100%;">
+                                       <tr>
+                                          <th>Nome</th>
+                                          <th>Fone</th>
+                                          <th>Função</th>
+                                          <th>Seguimento</th>
+                                          <th>Condição</th>
+                                       </tr>
+                                       {foreach $conselheiros as $conselheiro}
+                                          <tr>
+                                             <td>{$conselheiro.nome}</td>  
+                                             <td>{if isset($conselheiro.fone) } {$conselheiro.fone} {/if}</td> 
+                                             <td>{$conselheiro.funcao}</td> 
+                                             <td>{$conselheiro.seguimento}</td> 
+                                             <td>{$conselheiro.condicao} </td>
+                                          </tr>
+                                       {/foreach}
+                                       </table>
+                                       <br>
+                                       <br>
+                                       <br>
+                                       Mais informações, no link abaixo:   <br> 
+                                       <a href="http://apps.mobieduca.me/seduc">http://apps.mobieduca.me/seduc</a>    
+                                       </p>
+                                    </td>
+                                 </tr>
+                                 <tr style="height: 20px;">
+                                    <td style="vertical-align: top; text-align: left; background-color: #feffff; padding: 35px 15px 15px 15px;">
+                                       <p style="font-size: 12px; margin-bottom: 1em; font-family: Arial, Helvetica, sans-serif; margin-top: 0px; color: #a7a7a7; line-height: 155%; background-color: transparent; mso-line-height-rule: exactly;" align="left"><span style="color: #000000;"> &copy; Mobieduca.me </span>  </p>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </td>
+         </tr>
+         <tr>
+            <td style="font-size: 0px; height: 8px; line-height: 0;"> </td>
+         </tr>
+      </tbody>
+   </table>
+</body>
+</html>

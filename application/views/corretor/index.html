@@ -1,0 +1,168 @@
+{block  name="conteudo"}
+    {literal}
+        <div id="corretorapp">
+            <router-view></router-view>
+        </div>
+
+        <template id="painel">
+            <div class="gerencia">
+                <count-lotes></count-lotes>
+            </div>
+        </template>
+
+        <template id="corretor_lista">
+            <div class="col-md-12">
+                <div class="col-sm-12 box-search">
+                    <div class="row">
+                        <input type="search" v-model="buscarCorretor" class="form-control search-cand" placeholder="Pesquisar corretor">
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="table-responsive">
+
+                    <table class="table content-res">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Nome
+                                </th>
+                                <th>
+                                   CRECI
+                                </th>
+                                <th>
+                                   Coordenador
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr v-for="co in lista | orderBy 'nome' | filterBy buscarCorretor ">
+                                <td>  <a href="#!/id/{{co.id}}">{{co.nome }}</a> </td>
+                                <td>{{co.creci }}</td>
+                                <td>{{co.coordenador }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </template>
+
+        <template id="count-lotes">
+            <div class="col-md-12 col-xs-12">
+                <h3>
+                <a  v-if="user.nivel !='3'" v-link="{ path:'/', activeClass: 'btn' } "><i class="glyphicon glyphicon-arrow-left"></i> Voltar</a>
+                {{counts.corretor.nome}}</h3>
+                <nav>
+                    <a href="{{Const.home_url}}lotes" class="btn btn-info">Lotes</a>
+                </nav>
+                <hr>
+            </div>
+            <div class="col-md-6 col-xs-12" id="counts">
+                <div class="contente">
+                    <header>
+                        Cientes
+                    </header>
+                    <main>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: green; border-radius: 50%"></span> Clientes de {{get_two_names(counts.corretor.nome)}} </span>
+                                <span class="number">{{counts.cadastro}} </span>
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 col-xs-12">
+                            <div class="vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: green; border-radius: 50%"></span> Compareceram  </span>
+                                <span class="number">{{counts.compareceu}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="n_vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: red; border-radius: 50%"></span> Ainda não compareceu  </span>
+                                <span class="number">{{counts.cadastro - counts.compareceu}}</span>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </main>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-md-6 col-xs-12" id="counts">
+                <div class="contente">
+                    <header>
+                        Lotes
+                    </header>
+                    <main>
+                        <div class="col-md-12 col-xs-12">
+                            <div class="vendido l_box">
+
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: green; border-radius: 50%"></span> Total de Lotes   </span>
+                                <span class="number">{{counts.total_lote}}</span>
+
+
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: green; border-radius: 50%"></span> Vendidos por {{get_two_names(counts.corretor.nome)}} </span>
+                                <span class="number">{{counts.vendido}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="n_vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: red; border-radius: 50%"></span> Não vendidos  </span>
+                                <span class="number">{{counts.n_vendido}}</span>
+                            </div>
+                        </div>
+
+                        <div class="clearfix"></div>
+                    </main>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-md-12 col-xs-12">
+                <div class="contente">
+                    <header>
+                        Clintes de {{get_two_names(counts.corretor.nome)}}
+                    </header>
+                    <main>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Lotes</th>
+                                        <th>Presença</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="corretor in corretores | orderBy 'imobiliaria' " class="{{presenca(corretor.comparecimento).class}}">
+                                        <td>
+                                            {{corretor.nome}} <br>
+                                        </td>
+                                        <td>{{corretor.lotes}}</td>
+                                        <td>{{presenca(corretor.comparecimento).label}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </main>
+                </div>
+            </div>
+        </template>
+
+    {/literal}
+{/block}
+
+{block name="scripts"}
+<script type="text/javascript" src="{$aplication.js}libs/moment.js"></script>
+<script type="text/javascript" src="{$aplication.js}libs/vue.js"></script>
+<script type="text/javascript" src="{$aplication.js}libs/vue-router.js"></script>
+<script type="text/javascript" src="{$aplication.js}libs/vue-resource.js"></script>
+<script type="text/javascript" src="{$aplication.js}appcorretor.js?v={rand(0,10)}"></script>
+{/block}

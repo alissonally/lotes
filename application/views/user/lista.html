@@ -1,0 +1,59 @@
+{block name="conteudo"}
+	<div class="row">
+			
+		<div class="col-md-12 col-xs-12">
+			{if $success}
+				<div class="alert alert-success">
+					{$success}
+				</div>	
+			{/if}	
+			{if $erro}
+				<div class="alert alert-danger">
+					{$erro}
+				</div>	
+			{/if}	
+			<p>
+	        	<a href="{$aplication.app}usuario/novo" class="btn btn-primary">Novo usuario</a>
+	        	<a href="{$aplication.app}usuario/corretor" class="btn btn-primary">Criar acesso para corretor</a>
+	        </p>
+			<h2>Usuários ({$count})</h2>
+			{if isset($usuarios)}
+	        <div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Nome</th>
+							<th>Email</th>
+							<th>Nivel de acesso</th>
+							<th>Ações</th>
+						</tr>
+					</thead>
+					{foreach $usuarios as $usuario}
+					<tr class="{$usuario->id}">
+						<td>
+							{$usuario->nome}
+						</td>
+							
+						<td>
+							{$usuario->email}
+						</td>
+						<td>
+							{Estatico::nivel($usuario->nivel)}
+						</td>
+						<td>
+							<a href="{$aplication.app}usuario/edit/{$usuario->id}" class="btn btn-primary btn-xs">Editar</a>
+							<a href="{$aplication.app}usuario/excluir/{$usuario->id}" onclick="return  confirm('Tem certreza que deseja excluir \n {$usuario->nome} ?\n Clique em ok para confirmar.')" class="btn btn-danger btn-xs">Exluir</a>
+						</td>
+					</tr>
+					{/foreach}
+				</table>
+			</div>
+			{else}
+			<p>Nenhum usuário encontrado</p>
+			{/if}
+			<div class="col-md-12">
+				{$paginacao}
+			</div>
+		</div>
+	</div>
+{/block}

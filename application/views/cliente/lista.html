@@ -1,0 +1,89 @@
+{block name="conteudo"}
+	<div class="row">
+			{include file="includes/busca-cliente.html" el_id='busca_cliente' placeholder='Buscar cliente' }
+		<div class="col-md-12 col-xs-12">
+			<p>
+	        	<a href="{$aplication.app}cliente/novo" class="btn btn-primary">Cadastrar novo cliente</a>
+	        </p>
+			{if $success_exclude}
+	        <div class="alert alert-success">
+	        	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+	            {$success_exclude}
+	        </div>
+	        {/if}
+	        <div class="row">
+		        <div class="col-md-12 col-xs-12">
+		        	<div class="row">
+						<div class="form-group col-md-4 col-xs-12">
+			                <select name="corretor" class="form-control" id="corretor_filter">
+			                    <option value="">Filtrar por corretor</option>
+		                    	{foreach $corretores as $c}
+		                            <option value="{$c->id}">{$c->nome}</option>
+		                        {/foreach}
+			                </select>
+		            	</div>
+		            	<div class="form-group col-md-4 col-xs-12">
+			                <select name="comparecimento" class="form-control" id="comparecimento_filter">
+			                    <option value="">Filtrar por status</option>
+		                    	{foreach Estatico::$compa as $c=>$v}
+		                            <option value="{$c}">{$v}</option>
+		                        {/foreach}
+			                </select>
+		            	</div>
+		            	<div class="form-group col-md-4 col-xs-12">
+			                <button class="btn btn-default" id="aplicar-filter">Aplicar</button>
+			                {if $filtros}
+			                	<a href="{$aplication.app}cliente" class="btn btn-default" id="limpar-filter">Limpar Filtros <span class="glyphicon glyphicon-remove"> </a>
+			                {/if}
+		            	</div>
+	            	</div>
+		        </div>
+	        </div>
+	        <div class="table-responsive">
+				<table class="table table-hover">
+				<thead>
+					<tr>
+						<td colspan="4">
+							{if isset($corretor)}
+								<h4>Corretor: {$corretor->nome}</h4>
+							{/if}
+							Total: {$count}
+
+						</td>
+					</tr>
+					<tr>
+						<td>Nome</td>
+						<td>Dados</td>
+						<td>Comparecimento</td>
+						<td>Ações</td>
+					</tr>
+				</thead>
+				{foreach $clientes as $cliente}
+				<tr class="{Estatico::classe($cliente->comparecimento)}">
+					<td>
+						<a href="{$aplication.app}cliente/id/{$cliente->id}">{$cliente->nome}</a><br>
+						<strong>Corretor:</strong>	<a href="{$aplication.app}corretor/id/{$cliente->corretor->id}">{$cliente->corretor->nome}</a>
+					</td>
+
+					<td>
+						<strong>CPF/CNPJ: </strong> {$cliente->cpf_cnpj} <br>
+						<strong>E-mail:</strong> {$cliente->endereco[0]->email|default:' '} <br>
+					</td>
+
+					<td>{Estatico::comparecimento($cliente->comparecimento)}</td>
+					<td>
+						<a href="{$aplication.app}cliente/edit/{$cliente->id}" class="btn btn-edit"><span class="glyphicon glyphicon-pencil"></span>Editar </a>
+						<!-- <a onclick="excluirConselheiro('undefined', {$cliente->id}, '{$cliente->nome}')" class="btn btn-edit"><span class="glyphicon glyphicon-remove"></span>Excluir </a> -->
+					</td>
+				</tr>
+				{/foreach}
+				</table>
+			</div>
+			<div class="col-md-12">
+				{$paginacao}
+			</div>
+		</div>
+	</div>
+{/block}

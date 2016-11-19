@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /loteamento/
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteRule ^(.*)$ default.php?url=$1 [QSA,l]

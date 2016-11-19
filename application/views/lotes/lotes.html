@@ -1,0 +1,54 @@
+{block name="conteudo"}
+    <div class="col-md-12 col-xs-12">
+        <h3><a  href="{$aplication.app}corretor"><i class="glyphicon glyphicon-arrow-left"></i> Corretores</a> Lotes</h3>
+        <div class="row">
+            {literal}
+            <div id="lotes-app">
+                <router-view></router-view>
+            </div>
+
+            <template id="lote_tpl">
+                <div class="contente">
+                    <header>
+                        Lotes
+                    </header>
+                    <main>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: red; border-radius: 50%"></span> Vendidos  </span>
+                                <span class="number">{{count_lotes.vendidos}}</span>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-xs-12">
+                            <div class="n_vendido l_box">
+                                <span class="v-text"><span style=" display:inline-block; width:10px; height:10px; background: green; border-radius: 50%"></span> Disponíveis  </span>
+                                <span class="number">{{count_lotes.disponivel}}</span>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-1 col-xs-4" v-for="lote in lotes">
+                            <div class="{{classe_status(lote.status)}}">
+
+                            L {{lote.lote}} <br>
+                            Q {{lote.quadra}} <br>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </main>
+                    <div class="clearfix"></div>
+                </div>
+
+
+            </template>
+            {/literal}
+        </div>
+    </div>
+{/block}
+
+{block name="scripts"}
+<script type="text/javascript" src="{$aplication.js}libs/moment.js"></script>
+<script type="text/javascript" src="{$aplication.js}libs/vue.js"></script>
+<script type="text/javascript" src="{$aplication.js}libs/vue-router.js"></script>
+<script type="text/javascript" src="{$aplication.js}libs/vue-resource.js"></script>
+<script type="text/javascript" src="{$aplication.js}lote.js?v={rand(0,10)}"></script>
+{/block}
